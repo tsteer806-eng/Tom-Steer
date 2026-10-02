@@ -1,0 +1,77 @@
+name: Update and deploy Oxford HC dashboard
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - site/data.json
+  workflow_dispatch:
+  schedule:
+    - cron: "59 22 * * 6"
+    - cron: "59 23 * * 6"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: oxford-hc-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.timing.outputs.should_run }}
+    steps:
+      - uses: actions/checkout@v6
+      - name: Check the UK refresh time
+        id: timing
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_SCHEDULE: ${{ github.event.schedule }}
+        run: |
+          if [ "$EVENT_NAME" != "schedule" ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          elif [ "$EVENT_SCHEDULE" = "59 22 * * 6" ] && [ "$(TZ=Europe/London date +%z)" = "+0100" ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          elif [ "$EVENT_SCHEDULE" = "59 23 * * 6" ] && [ "$(TZ=Europe/London date +%z)" = "+0000" ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Refresh the league table
+        if: steps.timing.outputs.should_run == 'true'
+        continue-on-error: true
+        run: node scripts/update.mjs
+      - name: Save the verified snapshot
+        if: steps.timing.outputs.should_run == 'true'
+        shell: bash
+        run: |
+          git config user.name "Oxford HC dashboard"
+          git config user.email "actions@users.noreply.github.com"
+          git add site/data.json
+          git diff --cached --quiet || (git commit -m "Refresh Oxford 2 league table" && git push)
+      - name: Configure GitHub Pages
+        if: steps.timing.outputs.should_run == 'true'
+        uses: actions/configure-pages@v5
+      - name: Upload website
+        if: steps.timing.outputs.should_run == 'true'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+
+  deploy:
+    if: needs.build.outputs.should_run == 'true'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Publish website
+        id: deployment
+        uses: actions/deploy-pages@v4
+
