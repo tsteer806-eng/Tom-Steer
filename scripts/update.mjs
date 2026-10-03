@@ -42,8 +42,10 @@ const previous = JSON.parse(await readFile(DATA_PATH, "utf8"));
 const teams = parseTable(await response.text());
 const date = londonDate();
 const point = { date, positions: Object.fromEntries(teams.map(team => [team.name, team.position])) };
-const history = [...(previous.history || []).filter(item => item.date !== date), point]
-  .sort((a, b) => a.date.localeCompare(b.date));
+const existingHistory = previous.history || [];
+const history = process.env.RECORD_HISTORY === "true"
+  ? [...existingHistory.filter(item => item.date !== date), point].sort((a, b) => a.date.localeCompare(b.date))
+  : existingHistory;
 const next = {
   competition: "South Central Open - Men's Division 1 North",
   sourceUrl: SOURCE_URL,
