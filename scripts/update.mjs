@@ -1,6 +1,8 @@
 import { readFile, writeFile } from "node:fs/promises";
 
 const SOURCE_URL = "https://www.oxfordhc.org/teams/259935/league-table?tableId=191993";
+const FIXTURES_URL = "https://www.oxfordhc.org/teams/259935/fixtures-results";
+const COMPETITION = "South Central Open - Men's Division 1 North";
 const DATA_PATH = new URL("../site/data.json", import.meta.url);
 
 function londonDate() {
@@ -11,12 +13,16 @@ function londonDate() {
   return `${value.year}-${value.month}-${value.day}`;
 }
 
-function parseTable(html) {
+function nextData(html) {
   const marker = html.indexOf("__NEXT_DATA__");
-  if (marker < 0) throw new Error("The Oxford HC league data was not found.");
+  if (marker < 0) throw new Error("The Oxford HC data was not found.");
   const start = html.indexOf(">", marker) + 1;
   const end = html.indexOf("</script>", start);
-  const data = JSON.parse(html.slice(start, end));
+  return JSON.parse(html.slice(start, end));
+}
+
+function parseTable(html) {
+  const data = nextData(html);
   const tables = data?.props?.initialReduxState?.teams?.leagueTable?.tables?.["259935"] || [];
   const current = tables.find(table => table.id === 191993) || tables.at(-1);
   const teams = (current?.rows || []).map(row => {
@@ -33,13 +39,37 @@ function parseTable(html) {
   return teams.sort((a, b) => a.position - b.position);
 }
 
-const response = await fetch(SOURCE_URL, {
-  headers: { "User-Agent": "Oxford-HC-2s-dashboard/1.0", Accept: "text/html" }
-});
-if (!response.ok) throw new Error(`Oxford HC returned HTTP ${response.status}.`);
+function parseFixtures(html) {
+  const data = nextData(html);
+  const fixtureMap = data?.props?.initialReduxState?.teams?.fixtures?.fixtures?.["259935"] || {};
+  const fixtures = Object.values(fixtureMap)
+    .filter(fixture => fixture.division === COMPETITION && !fixture.isCancelledOrPostponed)
+    .map(fixture => ({
+      id: fixture.id,
+      opponent: fixture.opponent,
+      homeAway: fixture.ha === "h" ? "Home" : "Away",
+      pushback: fixture.dateTime,
+      sourceUrl: `https://www.oxfordhc.org/teams/259935/match-centre/${fixture.id}`
+    }))
+    .sort((a, b) => a.pushback.localeCompare(b.pushback));
+  if (!fixtures.length) throw new Error("The published fixtures were incomplete, so the verified snapshot was left unchanged.");
+  return fixtures;
+}
+
+const headers = { "User-Agent": "Oxford-HC-2s-dashboard/1.0", Accept: "text/html" };
+const [tableResponse, fixturesResponse] = await Promise.all([
+  fetch(SOURCE_URL, { headers }),
+  fetch(FIXTURES_URL, { headers })
+]);
+if (!tableResponse.ok || !fixturesResponse.ok) {
+  throw new Error(`Oxford HC returned HTTP ${tableResponse.status}/${fixturesResponse.status}.`);
+}
 
 const previous = JSON.parse(await readFile(DATA_PATH, "utf8"));
-const teams = parseTable(await response.text());
+const [teams, fixtures] = await Promise.all([
+  tableResponse.text().then(parseTable),
+  fixturesResponse.text().then(parseFixtures)
+]);
 const date = londonDate();
 const point = { date, positions: Object.fromEntries(teams.map(team => [team.name, team.position])) };
 const existingHistory = previous.history || [];
@@ -47,12 +77,14 @@ const history = process.env.RECORD_HISTORY === "true"
   ? [...existingHistory.filter(item => item.date !== date), point].sort((a, b) => a.date.localeCompare(b.date))
   : existingHistory;
 const next = {
-  competition: "South Central Open - Men's Division 1 North",
+  competition: COMPETITION,
   sourceUrl: SOURCE_URL,
+  fixturesSourceUrl: FIXTURES_URL,
   fetchedAt: new Date().toISOString(),
   teams,
+  fixtures,
   history
 };
 await writeFile(DATA_PATH, `${JSON.stringify(next, null, 2)}\n`, "utf8");
-console.log(`Saved ${teams.length} teams for ${date}; Oxford 2 are ${teams.find(t => t.name === "Oxford 2").position}.`);
+console.log(`Saved ${teams.length} teams and ${fixtures.length} fixtures for ${date}; Oxford 2 are ${teams.find(t => t.name === "Oxford 2").position}.`);
 

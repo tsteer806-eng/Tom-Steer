@@ -183,5 +183,162 @@
         "Newbury & Thatcham 2": 12
       }
     }
-  ]
+  ],
+  "fixtures": [
+    {
+      "id": "1-20252115",
+      "opponent": "Bicester 1",
+      "homeAway": "Home",
+      "pushback": "2026-09-19T14:30:00+01:00",
+      "sourceUrl": "https://www.oxfordhc.org/teams/259935/match-centre/1-20252115"
+    },
+    {
+      "id": "1-20252128",
+      "opponent": "Windsor 1",
+      "homeAway": "Away",
+      "pushback": "2026-09-26T10:15:00+01:00",
+      "sourceUrl": "https://www.oxfordhc.org/teams/259935/match-centre/1-20252128"
+    },
+    {
+      "id": "1-20252142",
+      "opponent": "Marlow 3",
+      "homeAway": "Home",
+      "pushback": "2026-10-03T14:30:00+01:00",
+      "sourceUrl": "https://www.oxfordhc.org/teams/259935/match-centre/1-20252142"
+    },
+    {
+      "id": "1-20252154",
+      "opponent": "Reading M3",
+      "homeAway": "Away",
+      "pushback": "2026-10-10T12:10:00+01:00",
+      "sourceUrl": "https://www.oxfordhc.org/teams/259935/match-centre/1-20252154"
+    },
+    {
+      "id": "1-20252166",
+      "opponent": "Newbury & Thatcham 1",
+      "homeAway": "Home",
+      "pushback": "2026-10-17T14:30:00+01:00",
+      "sourceUrl": "https://www.oxfordhc.org/teams/259935/match-centre/1-20252166"
+    },
+    {
+      "id": "1-20252179",
+      "opponent": "South Berkshire 2",
+      "homeAway": "Home",
+      "pushback": "2026-10-31T14:30:00+00:00",
+      "sourceUrl": "https://www.oxfordhc.org/teams/259935/match-centre/1-20252179"
+    },
+    {
+      "id": "1-20252187",
+      "opponent": "Milton Keynes 1",
+      "homeAway": "Away",
+      "pushback": "2026-11-07T13:00:00+00:00",
+      "sourceUrl": "https://www.oxfordhc.org/teams/259935/match-centre/1-20252187"
+    },
+    {
+      "id": "1-20252208",
+      "opponent": "Banbury 2",
+      "homeAway": "Home",
+      "pushback": "2026-11-14T14:30:00+00:00",
+      "sourceUrl": "https://www.oxfordhc.org/teams/259935/match-centre/1-20252208"
+    },
+    {
+      "id": "1-20252227",
+      "opponent": "Newbury & Thatcham 2",
+      "homeAway": "Home",
+      "pushback": "2026-11-21T14:30:00+00:00",
+      "sourceUrl": "https://www.oxfordhc.org/teams/259935/match-centre/1-20252227"
+    },
+    {
+      "id": "1-20252238",
+      "opponent": "Maidenhead 1",
+      "homeAway": "Away",
+      "pushback": "2026-11-28T13:15:00+00:00",
+      "sourceUrl": "https://www.oxfordhc.org/teams/259935/match-centre/1-20252238"
+    },
+    {
+      "id": "1-20252274",
+      "opponent": "Bicester 1",
+      "homeAway": "Away",
+      "pushback": "2026-12-05T13:00:00+00:00",
+      "sourceUrl": "https://www.oxfordhc.org/teams/259935/match-centre/1-20252274"
+    },
+    {
+      "id": "1-20252277",
+      "opponent": "Aylesbury 1",
+      "homeAway": "Away",
+      "pushback": "2027-01-09T14:00:00+00:00",
+      "sourceUrl": "https://www.oxfordhc.org/teams/259935/match-centre/1-20252277"
+    },
+    {
+      "id": "1-20252306",
+      "opponent": "Windsor 1",
+      "homeAway": "Home",
+      "pushback": "2027-01-16T14:30:00+00:00",
+      "sourceUrl": "https://www.oxfordhc.org/teams/259935/match-centre/1-20252306"
+    },
+    {
+      "id": "1-20252313",
+      "opponent": "Marlow 3",
+      "homeAway": "Away",
+      "pushback": "2027-01-23T16:15:00+00:00",
+      "sourceUrl": "https://www.oxfordhc.org/teams/259935/match-centre/1-20252313"
+    },
+    {
+      "id": "1-20252346",
+      "opponent": "Reading M3",
+      "homeAway": "Home",
+      "pushback": "2027-01-30T14:30:00+00:00",
+      "sourceUrl": "https://www.oxfordhc.org/teams/259935/match-centre/1-20252346"
+    },
+    {
+      "id": "1-20252362",
+      "opponent": "Newbury & Thatcham 1",
+      "homeAway": "Away",
+      "pushback": "2027-02-06T14:00:00+00:00",
+      "sourceUrl": "https://www.oxfordhc.org/teams/259935/match-centre/1-20252362"
+    },
+    {
+      "id": "1-20252387",
+      "opponent": "South Berkshire 2",
+      "homeAway": "Away",
+      "pushback": "2027-02-20T11:45:00+00:00",
+      "sourceUrl": "https://www.oxfordhc.org/teams/259935/match-centre/1-20252387"
+    },
+    {
+      "id": "1-20252413",
+      "opponent": "Milton Keynes 1",
+      "homeAway": "Home",
+      "pushback": "2027-02-27T14:30:00+00:00",
+      "sourceUrl": "https://www.oxfordhc.org/teams/259935/match-centre/1-20252413"
+    },
+    {
+      "id": "1-20252448",
+      "opponent": "Banbury 2",
+      "homeAway": "Away",
+      "pushback": "2027-03-06T12:30:00+00:00",
+      "sourceUrl": "https://www.oxfordhc.org/teams/259935/match-centre/1-20252448"
+    },
+    {
+      "id": "1-20252461",
+      "opponent": "Newbury & Thatcham 2",
+      "homeAway": "Away",
+      "pushback": "2027-03-13T10:30:00+00:00",
+      "sourceUrl": "https://www.oxfordhc.org/teams/259935/match-centre/1-20252461"
+    },
+    {
+      "id": "1-20252502",
+      "opponent": "Maidenhead 1",
+      "homeAway": "Home",
+      "pushback": "2027-03-20T14:30:00+00:00",
+      "sourceUrl": "https://www.oxfordhc.org/teams/259935/match-centre/1-20252502"
+    },
+    {
+      "id": "1-20252533",
+      "opponent": "Aylesbury 1",
+      "homeAway": "Home",
+      "pushback": "2027-04-03T14:30:00+01:00",
+      "sourceUrl": "https://www.oxfordhc.org/teams/259935/match-centre/1-20252533"
+    }
+  ],
+  "fixturesSourceUrl": "https://www.oxfordhc.org/teams/259935/fixtures-results"
 }
