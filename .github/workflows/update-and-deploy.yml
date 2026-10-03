@@ -47,7 +47,7 @@ jobs:
         continue-on-error: true
         run: node scripts/update.mjs
       - name: Save the verified snapshot
-        if: steps.timing.outputs.should_run == 'true'
+        if: steps.timing.outputs.should_run == 'true' && github.event_name != 'push' && github.run_attempt == 1
         shell: bash
         run: |
           git config user.name "Oxford HC dashboard"
