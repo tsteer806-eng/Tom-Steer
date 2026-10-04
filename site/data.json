@@ -1,7 +1,8 @@
 {
   "competition": "South Central Open - Men's Division 1 North",
   "sourceUrl": "https://www.oxfordhc.org/teams/259935/league-table?tableId=191993",
-  "fetchedAt": "2026-10-02T17:19:40.946Z",
+  "fixturesSourceUrl": "https://www.oxfordhc.org/teams/259935/fixtures-results",
+  "fetchedAt": "2026-10-04T02:59:13.880Z",
   "teams": [
     {
       "position": 1,
@@ -146,42 +147,6 @@
       "against": 10,
       "difference": -8,
       "points": 0
-    }
-  ],
-  "history": [
-    {
-      "date": "2026-09-19",
-      "positions": {
-        "Oxford 2": 1,
-        "Newbury & Thatcham 1": 2,
-        "Windsor 1": 3,
-        "South Berkshire 2": 4,
-        "Marlow 3": 5,
-        "Maidenhead 1": 6,
-        "Milton Keynes 1": 7,
-        "Aylesbury 1": 8,
-        "Newbury & Thatcham 2": 9,
-        "Banbury 2": 10,
-        "Reading M3": 11,
-        "Bicester 1": 12
-      }
-    },
-    {
-      "date": "2026-09-26",
-      "positions": {
-        "Newbury & Thatcham 1": 1,
-        "Windsor 1": 2,
-        "Marlow 3": 3,
-        "Aylesbury 1": 4,
-        "Oxford 2": 5,
-        "Milton Keynes 1": 6,
-        "Maidenhead 1": 7,
-        "South Berkshire 2": 8,
-        "Bicester 1": 9,
-        "Reading M3": 10,
-        "Banbury 2": 11,
-        "Newbury & Thatcham 2": 12
-      }
     }
   ],
   "fixtures": [
@@ -340,5 +305,57 @@
       "sourceUrl": "https://www.oxfordhc.org/teams/259935/match-centre/1-20252533"
     }
   ],
-  "fixturesSourceUrl": "https://www.oxfordhc.org/teams/259935/fixtures-results"
+  "history": [
+    {
+      "date": "2026-09-19",
+      "positions": {
+        "Oxford 2": 1,
+        "Newbury & Thatcham 1": 2,
+        "Windsor 1": 3,
+        "South Berkshire 2": 4,
+        "Marlow 3": 5,
+        "Maidenhead 1": 6,
+        "Milton Keynes 1": 7,
+        "Aylesbury 1": 8,
+        "Newbury & Thatcham 2": 9,
+        "Banbury 2": 10,
+        "Reading M3": 11,
+        "Bicester 1": 12
+      }
+    },
+    {
+      "date": "2026-09-26",
+      "positions": {
+        "Newbury & Thatcham 1": 1,
+        "Windsor 1": 2,
+        "Marlow 3": 3,
+        "Aylesbury 1": 4,
+        "Oxford 2": 5,
+        "Milton Keynes 1": 6,
+        "Maidenhead 1": 7,
+        "South Berkshire 2": 8,
+        "Bicester 1": 9,
+        "Reading M3": 10,
+        "Banbury 2": 11,
+        "Newbury & Thatcham 2": 12
+      }
+    },
+    {
+      "date": "2026-10-04",
+      "positions": {
+        "Newbury & Thatcham 1": 1,
+        "Windsor 1": 2,
+        "Marlow 3": 3,
+        "Aylesbury 1": 4,
+        "Oxford 2": 5,
+        "Milton Keynes 1": 6,
+        "Maidenhead 1": 7,
+        "South Berkshire 2": 8,
+        "Bicester 1": 9,
+        "Reading M3": 10,
+        "Banbury 2": 11,
+        "Newbury & Thatcham 2": 12
+      }
+    }
+  ]
 }
