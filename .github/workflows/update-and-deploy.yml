@@ -9,6 +9,8 @@ on:
   schedule:
     - cron: "59 22 * * 6"
     - cron: "59 23 * * 6"
+    - cron: "0 8 * * *"
+    - cron: "0 9 * * *"
 
 permissions:
   contents: write
@@ -39,12 +41,15 @@ jobs:
             echo "should_run=true" >> "$GITHUB_OUTPUT"
           elif [ "$EVENT_SCHEDULE" = "59 23 * * 6" ] && [ "$(TZ=Europe/London date +%z)" = "+0000" ]; then
             echo "should_run=true" >> "$GITHUB_OUTPUT"
+          elif [ "$EVENT_SCHEDULE" = "0 8 * * *" ] && [ "$(TZ=Europe/London date +%z)" = "+0100" ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          elif [ "$EVENT_SCHEDULE" = "0 9 * * *" ] && [ "$(TZ=Europe/London date +%z)" = "+0000" ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
           else
             echo "should_run=false" >> "$GITHUB_OUTPUT"
           fi
       - name: Refresh the league table
         if: steps.timing.outputs.should_run == 'true'
-        continue-on-error: true
         env:
           RECORD_HISTORY: ${{ github.event_name == 'schedule' && github.run_attempt == 1 }}
         run: node scripts/update.mjs

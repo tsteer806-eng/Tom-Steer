@@ -42,8 +42,9 @@ function parseTable(html) {
 function parseFixtures(html) {
   const data = nextData(html);
   const fixtureMap = data?.props?.initialReduxState?.teams?.fixtures?.fixtures?.["259935"] || {};
-  const fixtures = Object.values(fixtureMap)
-    .filter(fixture => fixture.division === COMPETITION && !fixture.isCancelledOrPostponed)
+  const published = Object.values(fixtureMap)
+    .filter(fixture => fixture.division === COMPETITION && !fixture.isCancelledOrPostponed);
+  const fixtures = published
     .map(fixture => ({
       id: fixture.id,
       opponent: fixture.opponent,
@@ -52,8 +53,11 @@ function parseFixtures(html) {
       sourceUrl: `https://www.oxfordhc.org/teams/259935/match-centre/${fixture.id}`
     }))
     .sort((a, b) => a.pushback.localeCompare(b.pushback));
+  const resultDates = [...new Set(
+    published.filter(fixture => fixture.hasOutcome).map(fixture => fixture.dateTime.slice(0, 10))
+  )].sort();
   if (!fixtures.length) throw new Error("The published fixtures were incomplete, so the verified snapshot was left unchanged.");
-  return fixtures;
+  return { fixtures, resultDates };
 }
 
 const headers = { "User-Agent": "Oxford-HC-2s-dashboard/1.0", Accept: "text/html" };
@@ -66,21 +70,26 @@ if (!tableResponse.ok || !fixturesResponse.ok) {
 }
 
 const previous = JSON.parse(await readFile(DATA_PATH, "utf8"));
-const [teams, fixtures] = await Promise.all([
+const [teams, fixtureData] = await Promise.all([
   tableResponse.text().then(parseTable),
   fixturesResponse.text().then(parseFixtures)
 ]);
-const date = londonDate();
+const { fixtures, resultDates } = fixtureData;
+const date = resultDates.at(-1) || londonDate();
 const point = { date, positions: Object.fromEntries(teams.map(team => [team.name, team.position])) };
 const existingHistory = previous.history || [];
+const validResultDates = new Set(resultDates);
 const history = process.env.RECORD_HISTORY === "true"
-  ? [...existingHistory.filter(item => item.date !== date), point].sort((a, b) => a.date.localeCompare(b.date))
+  ? [...existingHistory.filter(item => validResultDates.has(item.date) && item.date !== date), point]
+      .sort((a, b) => a.date.localeCompare(b.date))
   : existingHistory;
+const changed = JSON.stringify({ teams, fixtures, history }) !==
+  JSON.stringify({ teams: previous.teams, fixtures: previous.fixtures, history: previous.history });
 const next = {
   competition: COMPETITION,
   sourceUrl: SOURCE_URL,
   fixturesSourceUrl: FIXTURES_URL,
-  fetchedAt: new Date().toISOString(),
+  fetchedAt: changed ? new Date().toISOString() : previous.fetchedAt,
   teams,
   fixtures,
   history
