@@ -2,7 +2,7 @@
   "competition": "South Central Open - Men's Division 1 North",
   "sourceUrl": "https://www.oxfordhc.org/teams/259935/league-table?tableId=191993",
   "fixturesSourceUrl": "https://www.oxfordhc.org/teams/259935/fixtures-results",
-  "fetchedAt": "2026-10-08T15:29:17.537Z",
+  "fetchedAt": "2026-10-10T23:09:22.905Z",
   "teams": [
     {
       "position": 1,
@@ -342,6 +342,23 @@
     },
     {
       "date": "2026-10-03",
+      "positions": {
+        "Windsor 1": 1,
+        "Marlow 3": 2,
+        "Newbury & Thatcham 1": 3,
+        "Aylesbury 1": 4,
+        "Milton Keynes 1": 5,
+        "Oxford 2": 6,
+        "South Berkshire 2": 7,
+        "Bicester 1": 8,
+        "Banbury 2": 9,
+        "Maidenhead 1": 10,
+        "Reading M3": 11,
+        "Newbury & Thatcham 2": 12
+      }
+    },
+    {
+      "date": "2026-10-10",
       "positions": {
         "Windsor 1": 1,
         "Marlow 3": 2,
